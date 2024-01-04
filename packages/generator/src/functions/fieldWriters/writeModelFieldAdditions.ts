@@ -9,7 +9,7 @@ export const writeFieldAdditions = ({
   field,
   writeOptionalDefaults = false,
 }: WriteFieldOptions) => {
-  const { writeNullishInModelTypes } = field.generatorConfig;
+  const { writeNullishInModelTypes, writeDocumentationAsDescribe } = field.generatorConfig;
 
   writer
     .conditionalWrite(field.isList, `.array()`)
@@ -33,6 +33,9 @@ export const writeFieldAdditions = ({
       writeOptionalDefaults && field.isOptionalOnDefaultValue,
       `.optional()`,
     )
+    .conditionalWrite(
+      writeDocumentationAsDescribe && field.clearedDocumentation, 
+      `.describe("${field.clearedDocumentation}")`)
     .write(`,`)
     .newLine();
 };

@@ -76,6 +76,11 @@ export const configSchema = z.object({
     .optional()
     .default('false')
     .transform((val) => val === 'true'),
+  writeDocumentationAsDescribe: z
+    .string()
+    .optional()
+    .default('false')
+    .transform((val) => val === 'true'),
   useTypeAssertions: z
     .string()
     .optional()
@@ -92,6 +97,7 @@ export const configSchema = z.object({
   outputTypePath: z.string().optional().default('outputTypeSchemas'), // currently only used internally
   prismaVersion: PrismaVersionSchema.optional(),
   decimalJSInstalled: z.boolean().default(false),
+
 });
 
 export type GeneratorConfig = z.infer<typeof configSchema>;
